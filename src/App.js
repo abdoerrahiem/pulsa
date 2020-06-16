@@ -102,10 +102,10 @@ const App = () => {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Body className='text-center'>
+          <Modal.Body>
             <i
               class='fas fa-exclamation-triangle fa-2x'
-              style={{ color: 'yellow' }}
+              style={{ color: 'red' }}
             ></i>{' '}
             Silahkan isi orderan anda!
           </Modal.Body>
@@ -371,15 +371,15 @@ const App = () => {
 const Index = styled.div`
   background-color: #fff;
   margin: 0 auto;
-  padding: 10px;
-  border-radius: 10px;
+  padding: 20px 15px;
+  border-radius: 5px;
   margin-top: 30px;
   margin-bottom: 30px;
-  box-shadow: 0px 0px 7px -1px rgba(0, 0, 0, 0.75);
-  width: 500px;
+  box-shadow: 0px 0px 5px 2px rgba(133, 0, 133, 1);
+  width: 300px;
 
   @media screen and (max-width: 1000px) {
-    width: 85%;
+    width: 90%;
   }
 `
 const Paragraph = styled.p`
