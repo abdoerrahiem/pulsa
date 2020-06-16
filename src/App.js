@@ -102,14 +102,14 @@ const App = () => {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Body>
+          <Modal.Title>
             <i
               class='fas fa-exclamation-triangle fa-2x'
               style={{ color: 'red' }}
-            ></i>{' '}
-            Silahkan isi orderan anda!
-          </Modal.Body>
+            ></i>
+          </Modal.Title>
         </Modal.Header>
+        <Modal.Body>Silahkan isi orderan anda!</Modal.Body>
         <Modal.Footer>
           <Button variant='primary' onClick={handleClose}>
             OK <i class='fas fa-thumbs-up'></i>
