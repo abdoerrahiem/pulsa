@@ -371,7 +371,7 @@ const App = () => {
 const Index = styled.div`
   background-color: #fff;
   margin: 0 auto;
-  padding: 20px;
+  padding: 10px;
   border-radius: 10px;
   margin-top: 30px;
   margin-bottom: 30px;
@@ -379,7 +379,7 @@ const Index = styled.div`
   width: 500px;
 
   @media screen and (max-width: 1000px) {
-    width: 75%;
+    width: 85%;
   }
 `
 const Paragraph = styled.p`
