@@ -30,6 +30,7 @@ const App = () => {
   const [details, setDetails] = useState('')
   const [showDetails, setShowDetails] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
+  const [showPayLater, setShowPayLater] = useState(false)
 
   const { name, order, phone, via } = orderan
 
@@ -41,6 +42,11 @@ const App = () => {
 
   const onChangeMethod = (e) => {
     setOrderan({ ...orderan, via: e.target.value })
+    if (e.target.value === 'Pay Later') {
+      setShowPayLater(true)
+    } else {
+      setShowPayLater(false)
+    }
   }
 
   const handleOperator = (e) => {
@@ -112,7 +118,7 @@ const App = () => {
         <Modal.Body>Silahkan isi orderan anda!</Modal.Body>
         <Modal.Footer>
           <Button variant='primary' onClick={handleClose}>
-            OK <i class='fas fa-thumbs-up'></i>
+            OK
           </Button>
         </Modal.Footer>
       </Modal>
@@ -137,7 +143,7 @@ const App = () => {
             />
           </InputGroup>
           <InputGroup className='mb-3'>
-            <InputGroup.Prepend>
+            <InputGroup.Prepend style={{ color: 'black !important' }}>
               <InputGroup.Text id='basic-addon1'>
                 <i class='fas fa-phone-alt' />
               </InputGroup.Text>
@@ -341,22 +347,20 @@ const App = () => {
                 </option>
               ))}
             </Form.Control>
-            <Form.Group>
-              <Button
-                type='submit'
-                variant='primary'
-                className='btn-block mt-3'
-              >
-                Kirim <i class='fas fa-paper-plane'></i>
-              </Button>
-            </Form.Group>
+            {showPayLater && (
+              <em className='text-danger text-bold'>
+                * Batas pembayaran 1 hari
+              </em>
+            )}
           </Form.Group>
+          <div className='text-center'>
+            <Button type='submit' variant='primary' className='btn'>
+              Kirim <i class='fas fa-paper-plane'></i>
+            </Button>
+          </div>
         </Form>
         <Paragraph className='mt-4'>
-          <em>
-            * Orderan hanya akan diproses setelah melakukan pembayaran atau
-            transfer
-          </em>
+          <em>* Orderan akan diproses setelah melakukan transfer</em>
         </Paragraph>
         <Image>
           {cardImage.map((image, index) => (
@@ -375,8 +379,12 @@ const Index = styled.div`
   border-radius: 5px;
   margin-top: 30px;
   margin-bottom: 30px;
-  box-shadow: 0px 0px 5px 2px rgba(133, 0, 133, 1);
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.5);
   width: 300px;
+
+  .text-bold {
+    font-weight: bold;
+  }
 
   @media screen and (max-width: 1000px) {
     width: 90%;
@@ -384,7 +392,6 @@ const Index = styled.div`
 `
 const Paragraph = styled.p`
   font-size: 12px;
-  text-align: center;
 `
 
 const Jumbotron = styled.div`

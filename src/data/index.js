@@ -20,6 +20,12 @@ export const buyMethod = [
     value: 'LINK AJA (08987769188)',
     img: 'link-aja.png',
   },
+  {
+    id: 7,
+    name: 'Pay Later',
+    value: 'Pay Later',
+    img: 'link-aja.png',
+  },
 ]
 
 export const provider = [
