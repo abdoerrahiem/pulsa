@@ -31,6 +31,7 @@ const App = () => {
   const [showDetails, setShowDetails] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
   const [showPayLater, setShowPayLater] = useState(false)
+  const [showConfirmPuchase, setShowConfirmPurchase] = useState(false)
 
   const { name, order, phone, via } = orderan
 
@@ -44,8 +45,10 @@ const App = () => {
     setOrderan({ ...orderan, via: e.target.value })
     if (e.target.value === 'Pay Later') {
       setShowPayLater(true)
+      setShowConfirmPurchase(false)
     } else {
       setShowPayLater(false)
+      setShowConfirmPurchase(true)
     }
   }
 
@@ -347,21 +350,29 @@ const App = () => {
                 </option>
               ))}
             </Form.Control>
+            {showConfirmPuchase && (
+              <em
+                className='text-danger text-bold'
+                style={{ fontSize: '11px' }}
+              >
+                * Orderan akan diproses setelah melakukan transfer
+              </em>
+            )}
             {showPayLater && (
-              <em className='text-danger text-bold'>
+              <em
+                className='text-danger text-bold'
+                style={{ fontSize: '11px' }}
+              >
                 * Batas pembayaran 1 hari
               </em>
             )}
           </Form.Group>
-          <div className='text-center'>
+          <div className='text-center mb-4'>
             <Button type='submit' variant='primary' className='btn'>
               Kirim <i class='fas fa-paper-plane'></i>
             </Button>
           </div>
         </Form>
-        <Paragraph className='mt-4'>
-          <em>* Orderan akan diproses setelah melakukan transfer</em>
-        </Paragraph>
         <Image>
           {cardImage.map((image, index) => (
             <img key={index} src={image} alt='' width='40' height='40' />
@@ -389,9 +400,6 @@ const Index = styled.div`
   @media screen and (max-width: 1000px) {
     width: 90%;
   }
-`
-const Paragraph = styled.p`
-  font-size: 12px;
 `
 
 const Jumbotron = styled.div`
