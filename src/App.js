@@ -9,6 +9,7 @@ import {
   three,
   indosat,
   xl,
+  smartfren,
   telkomsel,
   buyMethod,
 } from './data'
@@ -21,6 +22,7 @@ const App = () => {
   const [showIndosat, setShowIndosat] = useState(false)
   const [showTelkomsel, setShowTelkomsel] = useState(false)
   const [showXl, setShowXl] = useState(false)
+  const [showSmartfren, setShowSmartfren] = useState(false)
   const [orderan, setOrderan] = useState({
     name: '',
     order: '',
@@ -61,30 +63,42 @@ const App = () => {
       setShowIndosat(false)
       setShowTelkomsel(false)
       setShowXl(false)
+      setShowSmartfren(false)
     } else if (e.target.value === 'Axis') {
       setShowThree(false)
       setShowAxis(true)
       setShowIndosat(false)
       setShowTelkomsel(false)
       setShowXl(false)
+      setShowSmartfren(false)
     } else if (e.target.value === 'Indosat') {
       setShowThree(false)
       setShowAxis(false)
       setShowIndosat(true)
       setShowTelkomsel(false)
       setShowXl(false)
+      setShowSmartfren(false)
     } else if (e.target.value === 'Telkomsel') {
       setShowThree(false)
       setShowAxis(false)
       setShowIndosat(false)
       setShowTelkomsel(true)
       setShowXl(false)
+      setShowSmartfren(false)
     } else if (e.target.value === 'XL') {
       setShowThree(false)
       setShowAxis(false)
       setShowIndosat(false)
       setShowTelkomsel(false)
       setShowXl(true)
+      setShowSmartfren(false)
+    } else if (e.target.value === 'Smarfren') {
+      setShowThree(false)
+      setShowAxis(false)
+      setShowIndosat(false)
+      setShowTelkomsel(false)
+      setShowXl(false)
+      setShowSmartfren(true)
     }
   }
 
@@ -332,6 +346,37 @@ const App = () => {
                     }
                   })}
               </>
+            ) : show && showSmartfren ? (
+              <>
+                <Form.Control
+                  as='select'
+                  name='order'
+                  value={order}
+                  onChange={(e) => onChange(e)}
+                >
+                  <option value='' disabled selected>
+                    Pilih Paket Smartfren
+                  </option>
+                  {Operator(smartfren)}
+                </Form.Control>
+                {showDetails &&
+                  smartfren.map((sm) => {
+                    if (`${sm.name} (Rp. ${sm.price})` === details) {
+                      return (
+                        <Jumbotron className='mt-2' key={sm.id}>
+                          <h5 className='lead mb-2 text-center'>{details}</h5>
+                          <hr />
+                          {sm.details.map((detail, index) => (
+                            <p className='lead' key={index}>
+                              <span className='text-success lead'>✓</span>{' '}
+                              {detail}
+                            </p>
+                          ))}
+                        </Jumbotron>
+                      )
+                    }
+                  })}
+              </>
             ) : null}
           </Form.Group>
           <Form.Group>
@@ -373,12 +418,12 @@ const App = () => {
             </Button>
           </div>
         </Form>
-        <Image>
-          {cardImage.map((image, index) => (
-            <img key={index} src={image} alt='' width='40' height='40' />
-          ))}
-        </Image>
       </Index>
+      <Image>
+        {cardImage.map((image, index) => (
+          <img key={index} src={image} alt='' width='50' height='50' />
+        ))}
+      </Image>
     </div>
   )
 }
@@ -417,6 +462,14 @@ const Image = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
+
+  img {
+    margin: 0 5px;
+  }
+
+  @media screen and (max-width: 1000px) {
+  }
 `
 
 export default App

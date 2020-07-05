@@ -34,6 +34,7 @@ export const provider = [
   { id: 3, name: 'Indosat', img: 'three.png' },
   { id: 4, name: 'Telkomsel', img: 'three.png' },
   { id: 5, name: 'XL', img: 'three.png' },
+  { id: 6, name: 'Smarfren', img: 'smarfren.png' },
 ]
 
 export const axis = [
@@ -140,30 +141,94 @@ export const axis = [
 export const three = [
   {
     id: 1,
-    name: 'Tri 1GB Bonus Youtube 7 Hari',
-    price: '25.000',
-    details: ['1GB (2G/3G/4G)', 'Unlimited Youtube', 'Masa Aktif 7 Hari'],
+    name: 'Tri 1GB 5 Hari Bonus Pulsa 2.000',
+    price: '15.000',
+    details: ['1GB (2G/3G/4G) 24 Jam', 'Pulsa 2.000', 'Masa Aktif 5 Hari'],
   },
   {
     id: 2,
+    name: 'Tri 1.5GB Non Full',
+    price: '15.000',
+    details: [
+      '500MB (2G/3G/4G) 24 Jam',
+      '1GB (Local Jabodetabek)',
+      'Masa Aktif 30 Hari',
+    ],
+  },
+  {
+    id: 3,
+    name: 'Tri 1.5GB Full',
+    price: '17.000',
+    details: ['1.5GB (2G/3G/4G) 24 Jam', 'Masa Aktif 7 Hari'],
+  },
+  {
+    id: 4,
+    name: 'Tri 1.5GB 7 Hari Bonus Pulsa 2.000',
+    price: '20.000',
+    details: ['1.5GB (2G/3G/4G) 24 Jam', 'Pulsa 2.000', 'Masa Aktif 7 Hari'],
+  },
+  {
+    id: 5,
+    name: 'Tri 1.5GB Bonus Pulsa 2.000',
+    price: '23.000',
+    details: [
+      '1.5GB (2G/3G/4G) 24 Jam',
+      'Pulsa 2.000',
+      'Masa Aktif Kuota Mengikuti Kartu',
+    ],
+  },
+  {
+    id: 6,
+    name: 'Tri 1GB Bonus Youtube 7 Hari',
+    price: '25.000',
+    details: [
+      '1GB (2G/3G/4G) 24 Jam',
+      'Unlimited Youtube',
+      'Masa Aktif 7 Hari',
+    ],
+  },
+  {
+    id: 7,
     name: 'Tri 2GB',
     price: '25.000',
     details: ['1GB (2G/3G/4G) 24 Jam', '1GB (2G/3G/4G) 24 Jam 30 Hari'],
   },
   {
-    id: 3,
+    id: 8,
+    name: 'Tri 3GB Non Full',
+    price: '28.000',
+    details: [
+      '1GB (2G/3G/4G) 24 Jam',
+      '2GB (Local Jabodetabek)',
+      'Masa Aktif 30 Hari',
+    ],
+  },
+  {
+    id: 9,
+    name: 'Tri 3GB Full',
+    price: '32.000',
+    details: ['3GB (2G/3G/4G) 24 Jam', 'Masa Aktif 30 Hari'],
+  },
+  {
+    id: 10,
+    name: 'Tri 3GB Bonus Pulsa 2.000',
+    price: '34.000',
+    details: ['3GB (2G/3G/4G) 24 Jam', 'Pulsa 2.000', 'Masa Aktif 30 Hari'],
+  },
+  {
+    id: 11,
     name: 'Tri 4GB Bonus Youtube 7 Hari',
     price: '45.000',
     details: ['4GB (2G/3G/4G) 24 Jam 30 Hari', 'Unlimited Youtube 7 Hari'],
   },
   {
-    id: 4,
+    id: 12,
     name: 'Tri 6GB',
     price: '50.000',
     details: ['2GB (2G/3G/4G) 24 Jam', '4GB (2G/3G/4G) 30 Hari'],
   },
   {
-    id: 5,
+    id: 13,
     name: 'Tri 8GB Bonus Youtube 15 Hari',
     price: '80.000',
     details: [
@@ -173,7 +238,7 @@ export const three = [
     ],
   },
   {
-    id: 6,
+    id: 14,
     name: 'Tri 9GB Bonus Youtube 15 Hari',
     price: '85.000',
     details: [
@@ -183,7 +248,7 @@ export const three = [
     ],
   },
   {
-    id: 7,
+    id: 15,
     name: 'Tri 13GB Bonus Youtube 15 Hari',
     price: '100.000',
     details: [
@@ -193,7 +258,7 @@ export const three = [
     ],
   },
   {
-    id: 8,
+    id: 16,
     name: 'Tri 22GB Bonus Youtube 15 Hari',
     price: '130.000',
     details: [
@@ -203,7 +268,18 @@ export const three = [
     ],
   },
   {
-    id: 9,
+    id: 17,
+    name: 'Tri 117GB',
+    price: '150.000',
+    details: [
+      '17GB (2G/3G/4G) 24 Jam',
+      '40GB (Sabtu - Minggu)',
+      '60GB (01.00 - 07.00)',
+      'Masa Aktif Paket 30 Hari',
+    ],
+  },
+  {
+    id: 18,
     name: 'Tri 30GB Bonus Youtube 15 Hari',
     price: '155.000',
     details: [
@@ -213,15 +289,26 @@ export const three = [
     ],
   },
   {
-    id: 10,
+    id: 19,
     name: 'Tri 33GB',
-    price: '140.000',
+    price: '157.000',
     details: ['3GB (2G/3G/4G) 30 Hari', '30GB (4G) 30 Hari'],
   },
   {
-    id: 11,
-    name: 'Tri 66GB 60 Hari',
-    price: '200.000',
+    id: 20,
+    name: 'Tri 150GB',
+    price: '185.000',
+    details: [
+      '25GB (2G/3G/4G) 24 Jam',
+      '55GB (Sabtu - Minggu)',
+      '70GB (01.00 - 07.00)',
+      'Masa Aktif Paket 30 Hari',
+    ],
+  },
+  {
+    id: 21,
+    name: 'Tri 66GB',
+    price: '235.000',
     details: ['6GB (2G/3G/4G) 60 Hari', '60GB (4G) 60 Hari'],
   },
 ]
@@ -611,6 +698,107 @@ export const xl = [
       '1GB Kuota Aplikasi',
       '14GB Iflix',
       '15GB (01.00-06.00 WIB)',
+      'Masa Aktif 30 Hari',
+    ],
+  },
+]
+
+export const smartfren = [
+  {
+    id: 1,
+    name: 'Smartfren 2GB Bonus Chat 3 Hari',
+    price: '11.000',
+    details: [
+      '500MB (4G) 24 Jam',
+      '1.5GB (4G) (01.00 - 05.00)',
+      '500MB Kuota Chat',
+      'Masa Aktif 3 Hari',
+    ],
+  },
+  {
+    id: 2,
+    name: 'Smartfren 3GB Bonus Chat 7 Hari',
+    price: '16.000',
+    details: [
+      '1.25GB (4G) 24 Jam',
+      '1.75GB (4G) (01.00 - 05.00)',
+      'Unlimited Chat',
+      'Masa Aktif 7 Hari',
+    ],
+  },
+  {
+    id: 3,
+    name: 'Smartfren Voucher Unlimited 5 Hari',
+    price: '25.000',
+    details: ['Unlimited (4G) 24 Jam', 'FUP 1GB Per Hari', 'Masa Aktif 5 Hari'],
+  },
+  {
+    id: 4,
+    name: 'Smartfren 10GB',
+    price: '36.000',
+    details: [
+      '5GB (4G) 24 Jam',
+      '5GB (4G) (01.00 - 05.00)',
+      'Masa Aktif 30 Hari',
+    ],
+  },
+  {
+    id: 5,
+    name: 'Smartfren 16GB',
+    price: '45.000',
+    details: [
+      '8GB (4G) 24 Jam',
+      '8GB (4G) (01.00 - 05.00)',
+      'Masa Aktif 30 Hari',
+    ],
+  },
+  {
+    id: 6,
+    name: 'Smartfren Voucher Unlimited 14 Hari',
+    price: '50.000',
+    details: [
+      'Unlimited (4G) 24 Jam',
+      'FUP 1GB Per Hari',
+      'Masa Aktif 14 Hari',
+    ],
+  },
+  {
+    id: 7,
+    name: 'Smartfren Voucher Unlimited 28 Hari',
+    price: '60.000',
+    details: [
+      'Unlimited (4G) 24 Jam',
+      'FUP 0.5GB Per Hari',
+      'Masa Aktif 28 Hari',
+    ],
+  },
+  {
+    id: 8,
+    name: 'Smartfren 30GB',
+    price: '68.000',
+    details: [
+      '15GB (4G) 24 Jam',
+      '15GB (4G) (01.00 - 05.00)',
+      'Masa Aktif 30 Hari',
+    ],
+  },
+  {
+    id: 9,
+    name: 'Smartfren Voucher Unlimited 30 Hari',
+    price: '90.000',
+    details: [
+      'Unlimited (4G) 24 Jam',
+      'FUP 1GB Per Hari',
+      'Masa Aktif 30 Hari',
+    ],
+  },
+  {
+    id: 10,
+    name: 'Smartfren 60GB',
+    price: '110.000',
+    details: [
+      '30GB (4G) 24 Jam',
+      '30GB (4G) (01.00 - 05.00)',
       'Masa Aktif 30 Hari',
     ],
   },
