@@ -34,7 +34,7 @@ export const provider = [
   { id: 3, name: 'Indosat', img: 'three.png' },
   { id: 4, name: 'Telkomsel', img: 'three.png' },
   { id: 5, name: 'XL', img: 'three.png' },
-  { id: 6, name: 'Smarfren', img: 'smarfren.png' },
+  { id: 6, name: 'Smartfren', img: 'smartfren.png' },
 ]
 
 export const axis = [

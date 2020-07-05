@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Form, Button, Modal, InputGroup, FormControl } from 'react-bootstrap'
-import cardImage from './img'
 
 import {
   provider,
@@ -92,7 +91,7 @@ const App = () => {
       setShowTelkomsel(false)
       setShowXl(true)
       setShowSmartfren(false)
-    } else if (e.target.value === 'Smarfren') {
+    } else if (e.target.value === 'Smartfren') {
       setShowThree(false)
       setShowAxis(false)
       setShowIndosat(false)
@@ -419,11 +418,6 @@ const App = () => {
           </div>
         </Form>
       </Index>
-      <Image>
-        {cardImage.map((image, index) => (
-          <img key={index} src={image} alt='' width='50' height='50' />
-        ))}
-      </Image>
     </div>
   )
 }
@@ -432,10 +426,10 @@ const Index = styled.div`
   background-color: #fff;
   margin: 0 auto;
   padding: 20px 15px;
-  border-radius: 5px;
+  border-radius: 3px;
   margin-top: 30px;
   margin-bottom: 30px;
-  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 2px 2px -1px rgba(0, 0, 0, 0.22);
   width: 300px;
 
   .text-bold {
@@ -455,20 +449,6 @@ const Jumbotron = styled.div`
   p {
     margin: 0;
     font-size: 14px;
-  }
-`
-
-const Image = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  img {
-    margin: 0 5px;
-  }
-
-  @media screen and (max-width: 1000px) {
   }
 `
 
