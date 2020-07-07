@@ -2,7 +2,7 @@ export const buyMethod = [
   {
     id: 1,
     name: 'BANK BRI',
-    value: 'BANK BRI (482201016222537 a/n MUHAJJIR)',
+    value: 'BANK BRI (482201017696535 a/n MUHAJJIR)',
     img: 'bank-bri.png',
   },
   {
