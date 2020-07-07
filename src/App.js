@@ -430,7 +430,7 @@ const Index = styled.div`
   margin-top: 30px;
   margin-bottom: 30px;
   box-shadow: 2px 2px 2px -1px rgba(0, 0, 0, 0.22);
-  width: 300px;
+  width: 320px;
 
   .text-bold {
     font-weight: bold;
