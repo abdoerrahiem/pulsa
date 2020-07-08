@@ -13,11 +13,18 @@ const Home = () => {
           <p className='lead text-center text-success'>Selamat Datang!</p>
           <div className='text-center'>
             <Link
-              className='btn btn-warning'
+              className='btn btn-warning mr-2'
               to='/kuota'
               style={{ color: '#fff' }}
             >
-              Klik disini untuk mulai order
+              Beli Kuota
+            </Link>
+            <Link
+              className='btn btn-warning ml-2'
+              to='/transfer'
+              style={{ color: '#fff' }}
+            >
+              Transfer Bank
             </Link>
           </div>
           <div className='text-center'>
@@ -51,7 +58,7 @@ const HomeStyle = styled.div`
 `
 
 const WelcomeStyle = styled.div`
-  height: 100vh;
+  height: 90vh;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -456,7 +456,7 @@ export const indosat = [
   {
     id: 18,
     name: 'Indosat Gratis Internet 30 Hari',
-    price: '190.000',
+    price: '180.000',
     details: [
       'Unlimited Kuota (2G/3G/4G) 24 Jam',
       'Unlimited Apps ON',
