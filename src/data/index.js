@@ -285,7 +285,7 @@ export const three = [
     details: [
       '10GB (2G/3G/4G) 24 Jam',
       '20GB (2G/3G/4G) 24 Jam 15 Hari',
-      'Unlimited Youtube 15 hari',
+      'Unlimited Youtube 30 hari',
     ],
   },
   {
