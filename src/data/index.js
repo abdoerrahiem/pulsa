@@ -250,7 +250,7 @@ export const three = [
   {
     id: 15,
     name: 'Tri 13GB Bonus Youtube 15 Hari',
-    price: '100.000',
+    price: '85.000',
     details: [
       '5GB (2G/3G/4G) 24 Jam',
       '8GB (2G/3G/4G) 24 Jam 15 Hari',
@@ -259,8 +259,19 @@ export const three = [
   },
   {
     id: 16,
+    name: 'Tri 18GB Bonus Youtube 15 Hari',
+    price: '110.000',
+    details: [
+      '6GB (2G/3G/4G) 24 Jam',
+      '12GB (2G/3G/4G) 24 Jam 15 Hari',
+      'Unlimited Youtube 15 hari',
+      'Masa Aktif Kuota Mengikuti Kartu',
+    ],
+  },
+  {
+    id: 16,
     name: 'Tri 22GB Bonus Youtube 15 Hari',
-    price: '130.000',
+    price: '120.000',
     details: [
       '8GB (2G/3G/4G) 24 Jam',
       '14GB (2G/3G/4G) 24 Jam 15 Hari',
@@ -280,8 +291,8 @@ export const three = [
   },
   {
     id: 18,
-    name: 'Tri 30GB Bonus Youtube 15 Hari',
-    price: '155.000',
+    name: 'Tri 30GB Bonus Youtube 30 Hari',
+    price: '140.000',
     details: [
       '10GB (2G/3G/4G) 24 Jam',
       '20GB (2G/3G/4G) 24 Jam 15 Hari',
