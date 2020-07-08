@@ -28,17 +28,17 @@ const NavBottom = ({ history }) => {
       </Link>
       <Link
         className='nav-item nav-link'
-        to='/search'
-        style={isActive(history, '/search')}
-      >
-        <i class='fas fa-list-ul fa-lg' />
-      </Link>
-      <Link
-        className='nav-item nav-link'
         to='/transfer'
         style={isActive(history, '/transfer')}
       >
         <i className='fas fa-university fa-lg' />
+      </Link>
+      <Link
+        className='nav-item nav-link'
+        to='/search'
+        style={isActive(history, '/search')}
+      >
+        <i class='fas fa-list-ul fa-lg' />
       </Link>
     </div>
   )
