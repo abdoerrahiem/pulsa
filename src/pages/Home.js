@@ -29,7 +29,7 @@ const Home = () => {
 }
 
 const HomeStyle = styled.div`
-  margin-top: 5rem;
+  margin-top: 2rem;
 
   img {
     width: 100%;
