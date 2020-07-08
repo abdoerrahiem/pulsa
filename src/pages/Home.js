@@ -31,8 +31,6 @@ const Home = () => {
 }
 
 const HomeStyle = styled.div`
-  margin-top: 10px;
-
   img {
     width: 100%;
   }
