@@ -8,21 +8,23 @@ import Image from '../img/cart.png'
 const Home = () => {
   return (
     <HomeStyle>
-      <div className='mb-4rem'>
-        <p className='lead text-center text-success'>Selamat Datang!</p>
-        <div className='text-center'>
-          <img src={Image} alt='payment-home' />
+      <WelcomeStyle className='mb-4rem'>
+        <div>
+          <p className='lead text-center text-success'>Selamat Datang!</p>
+          <div className='text-center'>
+            <Link
+              className='btn btn-warning'
+              to='/kuota'
+              style={{ color: '#fff' }}
+            >
+              Klik disini untuk mulai order
+            </Link>
+          </div>
+          <div className='text-center'>
+            <img src={Image} alt='payment-home' />
+          </div>
         </div>
-        <div className='text-center'>
-          <Link
-            className='btn btn-warning'
-            to='/kuota'
-            style={{ color: '#fff' }}
-          >
-            Klik disini untuk mulai order
-          </Link>
-        </div>
-      </div>
+      </WelcomeStyle>
       <NavBottom />
     </HomeStyle>
   )
@@ -48,6 +50,13 @@ const HomeStyle = styled.div`
       width: 500px;
     }
   }
+`
+
+const WelcomeStyle = styled.div`
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
 
 export default Home
