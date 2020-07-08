@@ -8,7 +8,7 @@ import Image from '../img/cart.png'
 const Home = () => {
   return (
     <HomeStyle>
-      <div>
+      <div className='mb-4rem'>
         <p className='lead text-center text-success'>Selamat Datang!</p>
         <div className='text-center'>
           <img src={Image} alt='payment-home' />
