@@ -269,7 +269,7 @@ export const three = [
     ],
   },
   {
-    id: 16,
+    id: 17,
     name: 'Tri 22GB Bonus Youtube 15 Hari',
     price: '120.000',
     details: [
@@ -279,7 +279,7 @@ export const three = [
     ],
   },
   {
-    id: 17,
+    id: 18,
     name: 'Tri 117GB',
     price: '150.000',
     details: [
@@ -290,7 +290,7 @@ export const three = [
     ],
   },
   {
-    id: 18,
+    id: 19,
     name: 'Tri 30GB Bonus Youtube 30 Hari',
     price: '140.000',
     details: [
@@ -300,13 +300,13 @@ export const three = [
     ],
   },
   {
-    id: 19,
+    id: 20,
     name: 'Tri 33GB',
     price: '157.000',
     details: ['3GB (2G/3G/4G) 30 Hari', '30GB (4G) 30 Hari'],
   },
   {
-    id: 20,
+    id: 21,
     name: 'Tri 150GB',
     price: '185.000',
     details: [
@@ -317,7 +317,7 @@ export const three = [
     ],
   },
   {
-    id: 21,
+    id: 22,
     name: 'Tri 66GB',
     price: '235.000',
     details: ['6GB (2G/3G/4G) 60 Hari', '60GB (4G) 60 Hari'],
