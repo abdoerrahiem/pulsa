@@ -10,7 +10,9 @@ const Home = () => {
     <HomeStyle>
       <div>
         <p className='lead text-center text-success'>Selamat Datang!</p>
-        <img src={Image} alt='payment-home' />
+        <div className='text-center'>
+          <img src={Image} alt='payment-home' />
+        </div>
         <div className='text-center'>
           <Link
             className='btn btn-warning'
@@ -38,7 +40,13 @@ const HomeStyle = styled.div`
   }
 
   .btn {
-    border-radius: 0;
+    border-radius: 20px;
+  }
+
+  @media only screen and (min-width: 600px) {
+    img {
+      width: 500px;
+    }
   }
 `
 

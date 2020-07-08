@@ -31,7 +31,7 @@ const NavBottom = ({ history }) => {
         to='/search'
         style={isActive(history, '/search')}
       >
-        <i class='fas fa-search fa-2x' />
+        <i class='fas fa-list-ul fa-2x' />
       </Link>
     </div>
   )
