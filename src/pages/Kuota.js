@@ -430,17 +430,15 @@ const Index = styled.div`
   background-color: #fff;
   margin: 0 auto;
   padding: 20px 15px;
-  border-radius: 3px;
+  border-top-left-radius: 20px;
+  border-bottom-right-radius: 20px;
   margin-top: 30px;
   margin-bottom: 5rem;
   box-shadow: 2px 2px 2px -1px rgba(0, 0, 0, 0.22);
+  width: 320px;
 
   .text-bold {
     font-weight: bold;
-  }
-
-  @media screen and (max-width: 720px) {
-    width: 90%;
   }
 `
 
@@ -457,6 +455,7 @@ const Jumbotron = styled.div`
 
 const KuotaStyle = styled.div`
   height: 90vh;
+  width: 100wh;
   display: flex;
   align-items: center;
   justify-content: center;
