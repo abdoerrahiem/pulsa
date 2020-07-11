@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 import NavBottom from '../components/NavBottom'
 import styled from 'styled-components'
 import { Form, Button, Modal, InputGroup, FormControl } from 'react-bootstrap'
@@ -101,7 +102,7 @@ const Kuota = () => {
     }
   }
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault()
 
     if (name === '' || order === '' || phone === '' || via === '') {
@@ -115,7 +116,7 @@ const Kuota = () => {
   const handleClose = () => setShowAlert(false)
 
   return (
-    <div>
+    <KuotaStyle>
       <div>
         <Modal
           show={showAlert}
@@ -421,7 +422,7 @@ const Kuota = () => {
         </Index>
       </div>
       <NavBottom />
-    </div>
+    </KuotaStyle>
   )
 }
 
@@ -439,7 +440,7 @@ const Index = styled.div`
     font-weight: bold;
   }
 
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 720px) {
     width: 90%;
   }
 `
@@ -453,6 +454,14 @@ const Jumbotron = styled.div`
     margin: 0;
     font-size: 14px;
   }
+`
+
+const KuotaStyle = styled.div`
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
 `
 
 export default Kuota
