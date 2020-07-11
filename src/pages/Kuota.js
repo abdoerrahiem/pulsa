@@ -434,7 +434,6 @@ const Index = styled.div`
   margin-top: 30px;
   margin-bottom: 5rem;
   box-shadow: 2px 2px 2px -1px rgba(0, 0, 0, 0.22);
-  width: 320px;
 
   .text-bold {
     font-weight: bold;
