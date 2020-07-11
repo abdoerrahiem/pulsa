@@ -6,6 +6,11 @@ import Kuota from './pages/Kuota'
 import Search from './pages/Search'
 import Transfer from './pages/Transfer'
 import Warning from './pages/Warning'
+import Admin from './pages/admin/Admin'
+import DaftarProvider from './pages/admin/DaftarProvider'
+import PaketKuota from './pages/admin/PaketKuota'
+import PembelianKuota from './pages/admin/PembelianKuota'
+import TransferBank from './pages/admin/TransferBank'
 
 const App = () => {
   const [showWarning, setShowWarning] = useState(false)
@@ -25,6 +30,11 @@ const App = () => {
         <Route exact path='/kuota' component={Kuota} />
         <Route exact path='/search' component={Search} />
         <Route exact path='/transfer' component={Transfer} />
+        <Route exact path='/admin' component={Admin} />
+        <Route exact path='/admin/daftar-provider' component={DaftarProvider} />
+        <Route exact path='/admin/paket-kuota' component={PaketKuota} />
+        <Route exact path='/admin/pembelian-kuota' component={PembelianKuota} />
+        <Route exact path='/admin/transfer-bank' component={TransferBank} />
       </Switch>
     </BrowserRouter>
   )
