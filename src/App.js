@@ -11,6 +11,10 @@ import DaftarProvider from './pages/admin/DaftarProvider'
 import PaketKuota from './pages/admin/PaketKuota'
 import PembelianKuota from './pages/admin/PembelianKuota'
 import TransferBank from './pages/admin/TransferBank'
+import PrivateRoute from './utils/PrivateRoute'
+
+import AdminState from './context/admin/AdminState'
+import AlertState from './context/alert/AlertState'
 
 const App = () => {
   const [showWarning, setShowWarning] = useState(false)
@@ -24,19 +28,39 @@ const App = () => {
   if (showWarning) return <Warning />
 
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path='/' component={Home} />
-        <Route exact path='/kuota' component={Kuota} />
-        <Route exact path='/search' component={Search} />
-        <Route exact path='/transfer' component={Transfer} />
-        <Route exact path='/admin' component={Admin} />
-        <Route exact path='/admin/daftar-provider' component={DaftarProvider} />
-        <Route exact path='/admin/paket-kuota' component={PaketKuota} />
-        <Route exact path='/admin/pembelian-kuota' component={PembelianKuota} />
-        <Route exact path='/admin/transfer-bank' component={TransferBank} />
-      </Switch>
-    </BrowserRouter>
+    <AdminState>
+      <AlertState>
+        <BrowserRouter>
+          <Switch>
+            <Route exact path='/' component={Home} />
+            <Route exact path='/kuota' component={Kuota} />
+            <Route exact path='/search' component={Search} />
+            <Route exact path='/transfer' component={Transfer} />
+            <Route exact path='/admin' component={Admin} />
+            <PrivateRoute
+              exact
+              path='/admin/daftar-provider'
+              component={DaftarProvider}
+            />
+            <PrivateRoute
+              exact
+              path='/admin/paket-kuota'
+              component={PaketKuota}
+            />
+            <PrivateRoute
+              exact
+              path='/admin/pembelian-kuota'
+              component={PembelianKuota}
+            />
+            <PrivateRoute
+              exact
+              path='/admin/transfer-bank'
+              component={TransferBank}
+            />
+          </Switch>
+        </BrowserRouter>
+      </AlertState>
+    </AdminState>
   )
 }
 
