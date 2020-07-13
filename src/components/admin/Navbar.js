@@ -11,7 +11,7 @@ const isActive = (history, path) => {
 
 const Navbar = ({ history }) => (
   <nav className='navbar navbar-expand-lg navbar-dark bg-primary sticky-top'>
-    <Link class='navbar-brand' to='/admin'>
+    <Link className='navbar-brand' to='/admin'>
       ADMIN <i className='fas fa-user-secret' />
     </Link>
     <button

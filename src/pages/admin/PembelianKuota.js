@@ -1,10 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Table, Badge } from 'react-bootstrap'
-import Navbar from '../../components/admin/Dashboard'
+import Navbar from '../../components/admin/Navbar'
+import Modal from '../../components/admin/Modal'
 
 const PembelianKuota = () => {
+  const [showWarning, setShowWarning] = useState(false)
+
   return (
     <div>
+      <Modal
+        show={showWarning}
+        close={() => setShowWarning(false)}
+        text='Hapus Semua'
+        icon='trash-alt'
+        warningtext='Apakah kamu yakin ingin menghapus semua list?'
+        danger
+      />
       <Navbar />
       <p className='lead text-center mt-2'>
         LIST PEMBELIAN KUOTA{' '}
@@ -21,6 +32,7 @@ const PembelianKuota = () => {
               <th>HP</th>
               <th>Provider</th>
               <th>Pembayaran</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -127,7 +139,7 @@ const PembelianKuota = () => {
           </tbody>
         </Table>
       </div>
-      <div className='add bg-danger'>
+      <div className='add bg-danger' onClick={() => setShowWarning(true)}>
         <i className='fas fa-trash-alt fa-2x text-light' />
       </div>
     </div>

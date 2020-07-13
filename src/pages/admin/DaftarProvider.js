@@ -1,10 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Table } from 'react-bootstrap'
-import Navbar from '../../components/admin/Dashboard'
+import Navbar from '../../components/admin/Navbar'
+import Modal from '../../components/admin/Modal'
 
 const DaftarProvider = () => {
+  const [showAddProvider, setShowAddProvider] = useState(false)
+  const [showEditProvider, setShowEditProvider] = useState(false)
+
   return (
     <div>
+      <Modal
+        show={showAddProvider}
+        close={() => setShowAddProvider(false)}
+        text='Tambah Provider'
+        icon='plus'
+      />
+      <Modal
+        show={showEditProvider}
+        close={() => setShowEditProvider(false)}
+        text='Edit Provider'
+        icon='edit'
+      />
       <Navbar />
       <p className='lead text-center mt-2'>LIST PROVIDER</p>
       <div>
@@ -21,147 +37,7 @@ const DaftarProvider = () => {
             <tr>
               <td>1</td>
               <td>three</td>
-              <td>
-                <i className='far fa-edit text-warning' />
-              </td>
-              <td>
-                <i className='fas fa-trash text-danger' />
-              </td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>indosat</td>
-              <td>
-                <i className='far fa-edit text-warning' />
-              </td>
-              <td>
-                <i className='fas fa-trash text-danger' />
-              </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>axis</td>
-              <td>
-                <i className='far fa-edit text-warning' />
-              </td>
-              <td>
-                <i className='fas fa-trash text-danger' />
-              </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>axis</td>
-              <td>
-                <i className='far fa-edit text-warning' />
-              </td>
-              <td>
-                <i className='fas fa-trash text-danger' />
-              </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>axis</td>
-              <td>
-                <i className='far fa-edit text-warning' />
-              </td>
-              <td>
-                <i className='fas fa-trash text-danger' />
-              </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>axis</td>
-              <td>
-                <i className='far fa-edit text-warning' />
-              </td>
-              <td>
-                <i className='fas fa-trash text-danger' />
-              </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>axis</td>
-              <td>
-                <i className='far fa-edit text-warning' />
-              </td>
-              <td>
-                <i className='fas fa-trash text-danger' />
-              </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>axis</td>
-              <td>
-                <i className='far fa-edit text-warning' />
-              </td>
-              <td>
-                <i className='fas fa-trash text-danger' />
-              </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>axis</td>
-              <td>
-                <i className='far fa-edit text-warning' />
-              </td>
-              <td>
-                <i className='fas fa-trash text-danger' />
-              </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>axis</td>
-              <td>
-                <i className='far fa-edit text-warning' />
-              </td>
-              <td>
-                <i className='fas fa-trash text-danger' />
-              </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>axis</td>
-              <td>
-                <i className='far fa-edit text-warning' />
-              </td>
-              <td>
-                <i className='fas fa-trash text-danger' />
-              </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>axis</td>
-              <td>
-                <i className='far fa-edit text-warning' />
-              </td>
-              <td>
-                <i className='fas fa-trash text-danger' />
-              </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>axis</td>
-              <td>
-                <i className='far fa-edit text-warning' />
-              </td>
-              <td>
-                <i className='fas fa-trash text-danger' />
-              </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>axis</td>
-              <td>
-                <i className='far fa-edit text-warning' />
-              </td>
-              <td>
-                <i className='fas fa-trash text-danger' />
-              </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>axis</td>
-              <td>
+              <td onClick={() => setShowEditProvider(true)}>
                 <i className='far fa-edit text-warning' />
               </td>
               <td>
@@ -171,7 +47,7 @@ const DaftarProvider = () => {
           </tbody>
         </Table>
       </div>
-      <div className='add bg-primary'>
+      <div className='add bg-primary' onClick={() => setShowAddProvider(true)}>
         <i className='fas fa-plus fa-2x text-light' />
       </div>
     </div>
