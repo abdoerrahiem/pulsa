@@ -23,7 +23,7 @@ const AdminState = ({ children }) => {
     }
 
     try {
-      const res = await axios.get('/admin')
+      const res = await axios.get('https://muhajjir-api.herokuapp.com/admin')
 
       dispatch({
         type: types.ADMIN_LOADED,
@@ -41,7 +41,11 @@ const AdminState = ({ children }) => {
     const config = { headers: { 'Content-Type': 'application/json' } }
 
     try {
-      const res = await axios.post('/admin/login', user, config)
+      const res = await axios.post(
+        'https://muhajjir-api.herokuapp.com/admin/login',
+        user,
+        config
+      )
 
       dispatch({
         type: types.LOGIN_SUCCESS,
