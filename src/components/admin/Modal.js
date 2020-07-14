@@ -1,5 +1,6 @@
-import React from 'react'
-import { Modal, Form, Button } from 'react-bootstrap'
+import React, { useState, useContext, useEffect } from 'react'
+import { Modal, Form, Button, Spinner, Alert } from 'react-bootstrap'
+import ProviderContext from '../../context/provider/ProviderContext'
 
 const ModalComponent = ({
   show,
@@ -9,7 +10,40 @@ const ModalComponent = ({
   warningtext,
   danger,
   paket,
+  action,
+  providerId,
 }) => {
+  const [name, setName] = useState('')
+  const [showAlert, setShowAlert] = useState(true)
+  const [showSuccessAlert, setshowSuccessAlert] = useState(false)
+  const [showFailedAlert, setShowFailedAlert] = useState(false)
+  const [showSpinner, setShowSpinner] = useState(false)
+
+  const providerContext = useContext(ProviderContext)
+  const { createProvider, updateProvider, getProvider } = providerContext
+
+  useEffect(() => {
+    if (providerId !== null) {
+      getProvider(providerId)
+    }
+
+    if (providerContext.providerName !== null) {
+      setName(providerContext.providerName)
+    }
+  }, [providerId, providerContext.providerName])
+
+  const handleSubmit = () => {
+    if (action === 'createProvider') {
+      if (name === '') return
+
+      createProvider({ name })
+      setName('')
+    } else if (action === 'updateProvider') {
+      updateProvider({ name }, providerId)
+      setName('')
+    }
+  }
+
   return (
     <Modal
       show={show}
@@ -22,6 +56,18 @@ const ModalComponent = ({
         <Modal.Title>{text}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        <div className='text-center mb-2'>
+          {providerContext.provider !== null ? (
+            <Alert variant='primary'>
+              <i className='fas fa-check' /> {providerContext.provider.message}
+            </Alert>
+          ) : providerContext.error !== null ? (
+            <Alert variant='danger'>
+              <i className='fas fa-times' />{' '}
+              {providerContext.error.data.message}
+            </Alert>
+          ) : null}
+        </div>
         {warningtext ? (
           warningtext
         ) : paket ? (
@@ -43,11 +89,17 @@ const ModalComponent = ({
             </Form.Group>
           </>
         ) : (
-          <Form.Control type='text' placeholder='Nama Provider' />
+          <Form.Control
+            type='text'
+            placeholder='Nama Provider'
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
         )}
       </Modal.Body>
       <Modal.Footer>
-        <Button variant={danger ? 'danger' : 'primary'}>
+        <Button variant={danger ? 'danger' : 'primary'} onClick={handleSubmit}>
           {text} <i className={`fas fa-${icon}`} />
         </Button>
       </Modal.Footer>
