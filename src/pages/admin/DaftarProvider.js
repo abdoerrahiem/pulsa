@@ -9,13 +9,18 @@ const DaftarProvider = () => {
   const [showEditProvider, setShowEditProvider] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
   const [providerId, setProviderId] = useState(null)
+  const [theProviders, setTheProviders] = useState([])
 
   const providerContext = useContext(ProviderContext)
-  const { getProviders, deleteProvider, providers } = providerContext
+  const { getProviders, deleteProvider, providers, loading } = providerContext
 
   useEffect(() => {
     getProviders()
-  }, [providers, getProviders])
+
+    if (providers) {
+      setTheProviders(providers.data)
+    }
+  }, [providers])
 
   const handleDelete = (id) => {
     deleteProvider(id)
@@ -52,7 +57,7 @@ const DaftarProvider = () => {
       )}
       <p className='lead text-center mt-2'>LIST PROVIDER</p>
       <div>
-        {providers && providers.data.length > 0 ? (
+        {theProviders && theProviders.length > 0 ? (
           <Table responsive className='container'>
             <thead>
               <tr>
@@ -63,7 +68,7 @@ const DaftarProvider = () => {
               </tr>
             </thead>
             <tbody>
-              {providers.data.map((provider, index) => (
+              {theProviders.map((provider, index) => (
                 <tr key={provider._id}>
                   <td>{index + 1}</td>
                   <td>{provider.name}</td>
@@ -96,3 +101,7 @@ const DaftarProvider = () => {
 }
 
 export default DaftarProvider
+
+// : theProviders && theProviders.length === 0 ? (
+//   <p className='lead text-center'>Kamu belum membuat daftar provider</p>
+// )

@@ -6,6 +6,7 @@ import * as types from '../types'
 
 const initialState = {
   transactions: null,
+  transaction: null,
   loading: true,
   error: null,
 }
@@ -21,12 +22,75 @@ const TransactionState = ({ children }) => {
       )
 
       dispatch({
-        type: types.GET_TRANSACTION,
+        type: types.GET_TRANSACTIONS,
         payload: res.data,
       })
     } catch (err) {
       dispatch({
-        type: types.TRANSACTION_ERROR,
+        type: types.GET_TRANSACTIONS_ERROR,
+        payload: err.response,
+      })
+    }
+  }
+
+  // Create transaction
+  const createTransaction = async (data) => {
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+    }
+
+    try {
+      const res = await axios.post(
+        'https://muhajjir-api.herokuapp.com/transactions',
+        data,
+        config
+      )
+
+      dispatch({
+        type: types.CREATE_TRANSACTION,
+        payload: res.data,
+      })
+    } catch (err) {
+      dispatch({
+        type: types.CREATE_TRANSACTION_ERROR,
+        payload: err.response,
+      })
+    }
+  }
+
+  // Delete transaction
+  const deleteTransaction = async (id) => {
+    try {
+      const res = await axios.delete(
+        `https://muhajjir-api.herokuapp.com/transactions/${id}`
+      )
+
+      dispatch({
+        type: types.DELETE_TRANSACTION,
+        payload: res.data,
+      })
+    } catch (err) {
+      dispatch({
+        type: types.DELETE_TRANSACTION_ERROR,
+        payload: err.response,
+      })
+    }
+  }
+
+  // Delete all transactions
+  const deleteAllTransactions = async () => {
+    try {
+      const res = await axios.delete(
+        'https://muhajjir-api.herokuapp.com/transactions'
+      )
+
+      dispatch({
+        type: types.DELETE_ALL_TRANSACTIONS,
+        payload: res.data,
+      })
+    } catch (err) {
+      dispatch({
+        type: types.DELETE_ALL_TRANSACTIONS_ERROR,
         payload: err.response,
       })
     }
@@ -37,8 +101,11 @@ const TransactionState = ({ children }) => {
       value={{
         transactions: state.transactions,
         loading: state.loading,
-        error: state.loading,
+        error: state.error,
         getTransactions,
+        createTransaction,
+        deleteTransaction,
+        deleteAllTransactions,
       }}
     >
       {children}

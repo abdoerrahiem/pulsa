@@ -6,6 +6,7 @@ import * as types from '../types'
 
 const initialState = {
   transfers: null,
+  transfer: null,
   loading: true,
   error: null,
 }
@@ -21,12 +22,75 @@ const TransferState = ({ children }) => {
       )
 
       dispatch({
-        type: types.GET_TRANSFER,
+        type: types.GET_TRANSFERS,
         payload: res.data,
       })
     } catch (err) {
       dispatch({
-        type: types.TRANSFER_ERROR,
+        type: types.GET_TRANSFERS_ERROR,
+        payload: err.response,
+      })
+    }
+  }
+
+  // Create transfer
+  const createTransfer = async (data) => {
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+    }
+
+    try {
+      const res = await axios.post(
+        'https://muhajjir-api.herokuapp.com/transfers',
+        data,
+        config
+      )
+
+      dispatch({
+        type: types.CREATE_TRANSFER,
+        payload: res.data,
+      })
+    } catch (err) {
+      dispatch({
+        type: types.CREATE_TRANSFER_ERROR,
+        payload: err.response,
+      })
+    }
+  }
+
+  // Delete transfer
+  const deleteTransfer = async (id) => {
+    try {
+      const res = await axios.delete(
+        `https://muhajjir-api.herokuapp.com/transfers/${id}`
+      )
+
+      dispatch({
+        type: types.DELETE_TRANSFER,
+        payload: res.data,
+      })
+    } catch (err) {
+      dispatch({
+        type: types.DELETE_TRANSFER_ERROR,
+        payload: err.response,
+      })
+    }
+  }
+
+  // Delete all transfer
+  const deleteAllTransfers = async () => {
+    try {
+      const res = await axios.delete(
+        'https://muhajjir-api.herokuapp.com/transfers'
+      )
+
+      dispatch({
+        type: types.DELETE_ALL_TRANSFERS,
+        payload: res.data,
+      })
+    } catch (err) {
+      dispatch({
+        type: types.DELETE_ALL_TRANSFERS_ERROR,
         payload: err.response,
       })
     }
@@ -37,8 +101,11 @@ const TransferState = ({ children }) => {
       value={{
         transfers: state.transfers,
         loading: state.loading,
-        error: state.loading,
+        error: state.error,
         getTransfers,
+        createTransfer,
+        deleteTransfer,
+        deleteAllTransfers,
       }}
     >
       {children}

@@ -23,14 +23,38 @@ const ModalComponent = ({
   const { createProvider, updateProvider, getProvider } = providerContext
 
   useEffect(() => {
-    if (providerId !== null) {
+    if (providerId && providerContext.error === null) {
       getProvider(providerId)
     }
 
-    if (providerContext.providerName !== null) {
+    if (providerContext.providerName !== null && action === 'updateProvider') {
       setName(providerContext.providerName)
     }
-  }, [providerId, providerContext.providerName])
+
+    if (providerContext.provider !== null) {
+      setshowSuccessAlert(true)
+
+      setTimeout(() => {
+        setshowSuccessAlert(false)
+      }, 3000)
+    }
+
+    if (providerContext.error !== null) {
+      setShowFailedAlert(true)
+
+      setTimeout(() => {
+        setShowFailedAlert(false)
+      }, 3000)
+    }
+  }, [
+    providerContext.providerName,
+    action,
+    setshowSuccessAlert,
+    setShowFailedAlert,
+    providerContext.provider,
+    providerContext.error,
+    providerContext.loading,
+  ])
 
   const handleSubmit = () => {
     if (action === 'createProvider') {
@@ -57,14 +81,14 @@ const ModalComponent = ({
       </Modal.Header>
       <Modal.Body>
         <div className='text-center mb-2'>
-          {providerContext.provider !== null ? (
+          {showSuccessAlert ? (
             <Alert variant='primary'>
               <i className='fas fa-check' /> {providerContext.provider.message}
             </Alert>
-          ) : providerContext.error !== null ? (
+          ) : showFailedAlert ? (
             <Alert variant='danger'>
               <i className='fas fa-times' />{' '}
-              {providerContext.error.data.message}
+              {providerContext.error && providerContext.error.data.message}
             </Alert>
           ) : null}
         </div>
