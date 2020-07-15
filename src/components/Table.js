@@ -1,8 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
+import styled from 'styled-components'
+import { Alert } from 'react-bootstrap'
 import Modal from './admin/Modal'
+import PaketContext from '../context/paket/PaketContext'
 
-const Table = ({ provider, name, admin }) => {
+const Table = ({ providers, provider, name, admin }) => {
   const [showEditProvider, setShowEditProvider] = useState(false)
+  const [paketId, setPaketId] = useState('')
+
+  const paketContext = useContext(PaketContext)
+
+  const { deletePaket } = paketContext
+
+  const handleDelete = (id) => {
+    deletePaket(id)
+  }
 
   return (
     <div>
@@ -12,6 +24,9 @@ const Table = ({ provider, name, admin }) => {
         text='Edit Paket'
         icon='edit'
         paket
+        action='updatePaket'
+        paketId={paketId}
+        providers={providers}
       />
       <p className='lead'>Paket {name}</p>
       <table className='table table-hover'>
@@ -22,6 +37,7 @@ const Table = ({ provider, name, admin }) => {
             <th scope='col'>Harga</th>
             {admin && (
               <>
+                <th scope='col'>Deskripsi</th>
                 <th scope='col'></th>
                 <th scope='col'></th>
               </>
@@ -30,16 +46,29 @@ const Table = ({ provider, name, admin }) => {
         </thead>
         <tbody>
           {provider.map((prov, index) => (
-            <tr key={prov.id}>
+            <tr key={prov._id}>
               <th>{index + 1}</th>
               <td>{prov.name}</td>
               <td>Rp. {prov.price}</td>
               {admin && (
                 <>
-                  <td onClick={() => setShowEditProvider(true)}>
+                  <td>
+                    {prov.description.map((description, index) => (
+                      <Description key={index}>
+                        {' '}
+                        <i className='fas fa-check' /> {description}
+                      </Description>
+                    ))}
+                  </td>
+                  <td
+                    onClick={() => {
+                      setShowEditProvider(true)
+                      setPaketId(prov._id)
+                    }}
+                  >
                     <i className='far fa-edit text-warning' />
                   </td>
-                  <td>
+                  <td onClick={() => handleDelete(prov._id)}>
                     <i className='fas fa-trash text-danger' />
                   </td>
                 </>
@@ -51,5 +80,10 @@ const Table = ({ provider, name, admin }) => {
     </div>
   )
 }
+
+const Description = styled.p`
+  font-size: 10px;
+  margin-bottom: 5px;
+`
 
 export default Table

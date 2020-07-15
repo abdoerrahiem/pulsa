@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Modal, Form, Button, Spinner, Alert } from 'react-bootstrap'
 import ProviderContext from '../../context/provider/ProviderContext'
+import PaketContext from '../../context/paket/PaketContext'
 
 const ModalComponent = ({
   show,
@@ -12,15 +13,24 @@ const ModalComponent = ({
   paket,
   action,
   providerId,
+  providers,
+  paketId,
 }) => {
   const [name, setName] = useState('')
+  const [price, setPrice] = useState('')
+  const [description, setDescription] = useState('')
+  const [provider_id, setProvider_id] = useState('')
+
   const [showAlert, setShowAlert] = useState(true)
   const [showSuccessAlert, setshowSuccessAlert] = useState(false)
   const [showFailedAlert, setShowFailedAlert] = useState(false)
   const [showSpinner, setShowSpinner] = useState(false)
 
   const providerContext = useContext(ProviderContext)
+  const paketContext = useContext(PaketContext)
+
   const { createProvider, updateProvider, getProvider } = providerContext
+  const { createPaket, getPaket, updatePaket } = paketContext
 
   useEffect(() => {
     if (providerId && providerContext.error === null) {
@@ -29,6 +39,17 @@ const ModalComponent = ({
 
     if (providerContext.providerName !== null && action === 'updateProvider') {
       setName(providerContext.providerName)
+    }
+
+    if (paketId) {
+      getPaket(paketId)
+    }
+
+    if (paketContext.paket !== null && action === 'updatePaket') {
+      setName(paketContext.paket.data.name)
+      setPrice(paketContext.paket.data.price)
+      setDescription(paketContext.paket.data.description)
+      setProvider_id(paketContext.paket.data._id)
     }
 
     if (providerContext.provider !== null) {
@@ -47,14 +68,20 @@ const ModalComponent = ({
       }, 3000)
     }
   }, [
+    providerId,
+    paketId,
     providerContext.providerName,
+    paketContext.paket,
     action,
     setshowSuccessAlert,
     setShowFailedAlert,
     providerContext.provider,
     providerContext.error,
-    providerContext.loading,
+    // paketContext.paket,
+    paketContext.error,
   ])
+
+  console.log(paketContext.paket)
 
   const handleSubmit = () => {
     if (action === 'createProvider') {
@@ -65,6 +92,22 @@ const ModalComponent = ({
     } else if (action === 'updateProvider') {
       updateProvider({ name }, providerId)
       setName('')
+    } else if (action === 'createPaket') {
+      if (
+        name === '' ||
+        price === '' ||
+        description === '' ||
+        provider_id === ''
+      )
+        return
+
+      createPaket({ name, price, description }, provider_id)
+      setName('')
+      setPrice('')
+      setDescription('')
+      setProvider_id('')
+    } else if (action === 'updatePaket') {
+      updatePaket({ name, price, description }, provider_id)
     }
   }
 
@@ -97,19 +140,46 @@ const ModalComponent = ({
         ) : paket ? (
           <>
             <Form.Group>
-              <Form.Control as='select'>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+              <Form.Control
+                as='select'
+                value={provider_id}
+                onChange={(e) => setProvider_id(e.target.value)}
+              >
+                <option value='' disabled selected>
+                  Pilih Provider
+                </option>
+                {providers &&
+                  providers.map((provider) => (
+                    <option key={provider._id} value={provider._id}>
+                      {provider.name}
+                    </option>
+                  ))}
               </Form.Control>
             </Form.Group>
             <Form.Group>
-              <Form.Control type='text' placeholder='Nama Paket' />
+              <Form.Control
+                type='text'
+                placeholder='Nama Paket'
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
             </Form.Group>
             <Form.Group>
-              <Form.Control type='number' placeholder='Harga Paket' />
+              <Form.Control
+                type='number'
+                placeholder='Harga Paket'
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Control
+                as='textarea'
+                rows='3'
+                placeholder='Deskripsi Paket'
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
             </Form.Group>
           </>
         ) : (
