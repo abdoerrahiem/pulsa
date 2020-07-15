@@ -22,7 +22,7 @@ const PaketKuota = () => {
   useEffect(() => {
     getProviders()
 
-    if (paket !== null) {
+    if (paket !== null && paket.message) {
       setShowDeleteSuccess(true)
       setMessage(paket.message)
 

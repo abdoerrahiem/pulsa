@@ -15,11 +15,13 @@ const ModalComponent = ({
   providerId,
   providers,
   paketId,
+  isClicked,
 }) => {
   const [name, setName] = useState('')
   const [price, setPrice] = useState('')
   const [description, setDescription] = useState('')
   const [provider_id, setProvider_id] = useState('')
+  const [paket_id, setPaket_id] = useState('')
 
   const [showAlert, setShowAlert] = useState(true)
   const [showSuccessAlert, setshowSuccessAlert] = useState(false)
@@ -41,15 +43,19 @@ const ModalComponent = ({
       setName(providerContext.providerName)
     }
 
-    if (paketId) {
+    if (paketId && isClicked) {
       getPaket(paketId)
     }
 
-    if (paketContext.paket !== null && action === 'updatePaket') {
+    if (
+      paketContext.paket !== null &&
+      !paketContext.paket.message &&
+      action === 'updatePaket'
+    ) {
       setName(paketContext.paket.data.name)
       setPrice(paketContext.paket.data.price)
       setDescription(paketContext.paket.data.description)
-      setProvider_id(paketContext.paket.data._id)
+      setPaket_id(paketContext.paket.data._id)
     }
 
     if (providerContext.provider !== null) {
@@ -77,11 +83,9 @@ const ModalComponent = ({
     setShowFailedAlert,
     providerContext.provider,
     providerContext.error,
-    // paketContext.paket,
+    paketContext.paket,
     paketContext.error,
   ])
-
-  console.log(paketContext.paket)
 
   const handleSubmit = () => {
     if (action === 'createProvider') {
@@ -107,7 +111,7 @@ const ModalComponent = ({
       setDescription('')
       setProvider_id('')
     } else if (action === 'updatePaket') {
-      updatePaket({ name, price, description }, provider_id)
+      updatePaket({ name, price, description }, paketContext.paket.data._id)
     }
   }
 
@@ -139,23 +143,25 @@ const ModalComponent = ({
           warningtext
         ) : paket ? (
           <>
-            <Form.Group>
-              <Form.Control
-                as='select'
-                value={provider_id}
-                onChange={(e) => setProvider_id(e.target.value)}
-              >
-                <option value='' disabled selected>
-                  Pilih Provider
-                </option>
-                {providers &&
-                  providers.map((provider) => (
-                    <option key={provider._id} value={provider._id}>
-                      {provider.name}
-                    </option>
-                  ))}
-              </Form.Control>
-            </Form.Group>
+            {action === 'createPaket' && (
+              <Form.Group>
+                <Form.Control
+                  as='select'
+                  value={provider_id}
+                  onChange={(e) => setProvider_id(e.target.value)}
+                >
+                  <option value='' disabled selected>
+                    Pilih Provider
+                  </option>
+                  {providers &&
+                    providers.map((provider) => (
+                      <option key={provider._id} value={provider._id}>
+                        {provider.name}
+                      </option>
+                    ))}
+                </Form.Control>
+              </Form.Group>
+            )}
             <Form.Group>
               <Form.Control
                 type='text'

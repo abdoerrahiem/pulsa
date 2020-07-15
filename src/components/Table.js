@@ -1,12 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components'
-import { Alert } from 'react-bootstrap'
+import { Table } from 'react-bootstrap'
 import Modal from './admin/Modal'
 import PaketContext from '../context/paket/PaketContext'
 
-const Table = ({ providers, provider, name, admin }) => {
+const TableCom = ({ providers, provider, name, admin }) => {
   const [showEditProvider, setShowEditProvider] = useState(false)
   const [paketId, setPaketId] = useState('')
+  const [isClicked, setIsClicked] = useState(false)
 
   const paketContext = useContext(PaketContext)
 
@@ -27,19 +28,20 @@ const Table = ({ providers, provider, name, admin }) => {
         action='updatePaket'
         paketId={paketId}
         providers={providers}
+        isClicked={isClicked}
       />
       <p className='lead'>Paket {name}</p>
-      <table className='table table-hover'>
+      <Table responsive className='container'>
         <thead>
           <tr className='table-primary'>
-            <th scope='col'>No.</th>
-            <th scope='col'>Paket</th>
-            <th scope='col'>Harga</th>
+            <th>No.</th>
+            <th>Paket</th>
+            <th>Harga</th>
             {admin && (
               <>
-                <th scope='col'>Deskripsi</th>
-                <th scope='col'></th>
-                <th scope='col'></th>
+                <th>Deskripsi</th>
+                <th></th>
+                <th></th>
               </>
             )}
           </tr>
@@ -64,6 +66,11 @@ const Table = ({ providers, provider, name, admin }) => {
                     onClick={() => {
                       setShowEditProvider(true)
                       setPaketId(prov._id)
+                      setIsClicked(true)
+
+                      setTimeout(() => {
+                        setIsClicked(false)
+                      }, 1000)
                     }}
                   >
                     <i className='far fa-edit text-warning' />
@@ -76,7 +83,7 @@ const Table = ({ providers, provider, name, admin }) => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
     </div>
   )
 }
@@ -86,4 +93,4 @@ const Description = styled.p`
   margin-bottom: 5px;
 `
 
-export default Table
+export default TableCom
