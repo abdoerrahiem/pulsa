@@ -9,14 +9,18 @@ const DaftarProvider = () => {
   const [showEditProvider, setShowEditProvider] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
   const [providerId, setProviderId] = useState(null)
-  const [theProviders, setTheProviders] = useState([])
+  const [message, setMessage] = useState('')
 
   const providerContext = useContext(ProviderContext)
-  const { getProviders, deleteProvider, providers, loading } = providerContext
+  const { getProviders, deleteProvider, providers, provider } = providerContext
 
   useEffect(() => {
     getProviders()
-  }, [getProviders])
+
+    if (provider) {
+      setMessage(provider.message)
+    }
+  }, [getProviders, provider])
 
   const handleDelete = (id) => {
     deleteProvider(id)
@@ -36,6 +40,13 @@ const DaftarProvider = () => {
         text='Tambah Provider'
         icon='plus'
         action='createProvider'
+        showAndHideAlert={() => {
+          setShowAlert(true)
+
+          setTimeout(() => {
+            setShowAlert(false)
+          }, 3000)
+        }}
       />
       <Modal
         show={showEditProvider}
@@ -44,11 +55,18 @@ const DaftarProvider = () => {
         icon='edit'
         action='updateProvider'
         providerId={providerId}
+        showAndHideAlert={() => {
+          setShowAlert(true)
+
+          setTimeout(() => {
+            setShowAlert(false)
+          }, 3000)
+        }}
       />
       <Navbar />
-      {showAlert && (
+      {provider && showAlert && (
         <Alert variant='primary'>
-          <i className='fas fa-check' /> Provider berhasil dihapus
+          <i className='fas fa-check' /> {message}
         </Alert>
       )}
       <p className='lead text-center mt-2'>LIST PROVIDER</p>

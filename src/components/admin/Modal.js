@@ -18,6 +18,7 @@ const ModalComponent = ({
   isClicked,
   deleteAllTransactions,
   deleteAllTransfers,
+  showAndHideAlert,
 }) => {
   const [name, setName] = useState('')
   const [price, setPrice] = useState('')
@@ -94,9 +95,11 @@ const ModalComponent = ({
       if (name === '') return
 
       createProvider({ name })
+      showAndHideAlert()
       setName('')
     } else if (action === 'updateProvider') {
       updateProvider({ name }, providerId)
+      showAndHideAlert()
       setName('')
     } else if (action === 'createPaket') {
       if (
@@ -122,6 +125,8 @@ const ModalComponent = ({
     } else if (action === 'deleteAllTransfers') {
       deleteAllTransfers()
     }
+
+    close()
   }
 
   return (
