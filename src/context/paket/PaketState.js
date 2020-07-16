@@ -88,7 +88,7 @@ const PaketState = ({ children }) => {
 
     try {
       const res = await axios.put(
-        `https://muhajjir-api.herokuapp.com/pakets/${id}`,
+        `http://muhajjir-api.herokuapp.com/pakets/${id}`,
         data,
         config
       )

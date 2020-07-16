@@ -18,3 +18,7 @@ body {
   bottom: 20px;
   right: 20px;
 }
+
+.w-80 {
+  width: 90%;
+}

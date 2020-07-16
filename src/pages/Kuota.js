@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import axios from 'axios'
+import React, { useState, useContext, useEffect } from 'react'
 import NavBottom from '../components/NavBottom'
 import styled from 'styled-components'
 import { Form, Button, Modal, InputGroup, FormControl } from 'react-bootstrap'
@@ -14,6 +13,10 @@ import {
   buyMethod,
 } from '../data'
 import Operator from '../data/loop'
+
+import ProviderContext from '../context/provider/ProviderContext'
+import PaketContext from '../context/paket/PaketContext'
+import TransactionContext from '../context/transaction/TransactionContext'
 
 const Kuota = () => {
   const [show, setShow] = useState(false)
@@ -34,11 +37,34 @@ const Kuota = () => {
   const [showAlert, setShowAlert] = useState(false)
   const [showPayLater, setShowPayLater] = useState(false)
   const [showConfirmPuchase, setShowConfirmPurchase] = useState(false)
+  const [provider, setProvider] = useState('')
 
   const { name, order, phone, via } = orderan
 
+  const providerContext = useContext(ProviderContext)
+  const paketContext = useContext(PaketContext)
+  const transactionContext = useContext(TransactionContext)
+
+  const { getProviders, providers } = providerContext
+  const { getPakets, getPaket, pakets, paket } = paketContext
+  const { createTransaction } = transactionContext
+
+  useEffect(() => {
+    getProviders()
+  }, [])
+
   const onChange = (e) => {
-    setOrderan({ ...orderan, [e.target.name]: e.target.value })
+    if (e.target.name === 'order') {
+      getPaket(e.target.value)
+
+      setOrderan({
+        ...orderan,
+        order: e.nativeEvent.target[e.nativeEvent.target.selectedIndex].text,
+      })
+    } else {
+      setOrderan({ ...orderan, [e.target.name]: e.target.value })
+    }
+
     setDetails(e.target.value)
     setShowDetails(true)
   }
@@ -57,49 +83,7 @@ const Kuota = () => {
   const handleOperator = (e) => {
     setShow(true)
 
-    if (e.target.value === '3') {
-      setShowThree(true)
-      setShowAxis(false)
-      setShowIndosat(false)
-      setShowTelkomsel(false)
-      setShowXl(false)
-      setShowSmartfren(false)
-    } else if (e.target.value === 'Axis') {
-      setShowThree(false)
-      setShowAxis(true)
-      setShowIndosat(false)
-      setShowTelkomsel(false)
-      setShowXl(false)
-      setShowSmartfren(false)
-    } else if (e.target.value === 'Indosat') {
-      setShowThree(false)
-      setShowAxis(false)
-      setShowIndosat(true)
-      setShowTelkomsel(false)
-      setShowXl(false)
-      setShowSmartfren(false)
-    } else if (e.target.value === 'Telkomsel') {
-      setShowThree(false)
-      setShowAxis(false)
-      setShowIndosat(false)
-      setShowTelkomsel(true)
-      setShowXl(false)
-      setShowSmartfren(false)
-    } else if (e.target.value === 'XL') {
-      setShowThree(false)
-      setShowAxis(false)
-      setShowIndosat(false)
-      setShowTelkomsel(false)
-      setShowXl(true)
-      setShowSmartfren(false)
-    } else if (e.target.value === 'Smartfren') {
-      setShowThree(false)
-      setShowAxis(false)
-      setShowIndosat(false)
-      setShowTelkomsel(false)
-      setShowXl(false)
-      setShowSmartfren(true)
-    }
+    getPakets(e.target.value)
   }
 
   const onSubmit = async (e) => {
@@ -111,6 +95,14 @@ const Kuota = () => {
     }
 
     window.location.href = `https://api.whatsapp.com/send?phone=628987769188&text=Nama%20%3a%20${name}%0aOrderan%20%3a%20${order}%0aNo.%20Hp%20%3a%20${phone}%0aPembayaran%20%3a%20${via}%0a&source=&data=&app_absent=`
+
+    createTransaction({
+      name,
+      phone,
+      provider: paket.data.provider.name,
+      paket: order,
+      method: via,
+    })
   }
 
   const handleClose = () => setShowAlert(false)
@@ -147,7 +139,7 @@ const Kuota = () => {
             <InputGroup className='mb-3'>
               <InputGroup.Prepend>
                 <InputGroup.Text id='basic-addon1'>
-                  <i class='fas fa-user-tie' />
+                  <i className='fas fa-user-tie' />
                 </InputGroup.Text>
               </InputGroup.Prepend>
               <FormControl
@@ -163,7 +155,7 @@ const Kuota = () => {
             <InputGroup className='mb-3'>
               <InputGroup.Prepend style={{ color: 'black !important' }}>
                 <InputGroup.Text id='basic-addon1'>
-                  <i class='fas fa-phone-alt' />
+                  <i className='fas fa-phone-alt' />
                 </InputGroup.Text>
               </InputGroup.Prepend>
               <FormControl
@@ -176,23 +168,23 @@ const Kuota = () => {
                 onChange={(e) => onChange(e)}
               />
             </InputGroup>
-            <Form.Group>
-              <Form.Control
-                className='mb-2'
-                as='select'
-                onChange={(e) => handleOperator(e)}
-              >
-                <option value='' disabled selected>
-                  Pilih Operator
-                </option>
-                {provider.map((prov) => (
-                  <option key={prov.id} value={prov.name}>
-                    {prov.name}
+            {providers && (
+              <Form.Group>
+                <Form.Control
+                  className='mb-2'
+                  as='select'
+                  onChange={(e) => handleOperator(e)}
+                >
+                  <option value='' disabled selected>
+                    Pilih Operator
                   </option>
-                ))}
-              </Form.Control>
-              {show && showThree ? (
-                <>
+                  {providers.data.map((provider) => (
+                    <option key={provider._id} value={provider._id}>
+                      {provider.name}
+                    </option>
+                  ))}
+                </Form.Control>
+                {show && (
                   <Form.Control
                     as='select'
                     name='order'
@@ -200,186 +192,26 @@ const Kuota = () => {
                     onChange={(e) => onChange(e)}
                   >
                     <option value='' disabled selected>
-                      Pilih Paket 3
+                      Pilih Paket Kuota
                     </option>
-                    {Operator(three)}
+                    {Operator(pakets && pakets.data)}
                   </Form.Control>
+                )}
 
-                  {showDetails &&
-                    three.map((th) => {
-                      if (`${th.name} (Rp. ${th.price})` === details) {
-                        return (
-                          <Jumbotron className='mt-2' key={th.id}>
-                            <h5 className='lead mb-2 text-center'>{details}</h5>
-                            <hr />
-                            {th.details.map((detail, index) => (
-                              <p className='lead' key={index}>
-                                <span className='text-success lead'>✓</span>{' '}
-                                {detail}
-                              </p>
-                            ))}
-                          </Jumbotron>
-                        )
-                      }
-                    })}
-                </>
-              ) : show && showAxis ? (
-                <>
-                  <Form.Control
-                    as='select'
-                    name='order'
-                    value={order}
-                    onChange={(e) => onChange(e)}
-                  >
-                    <option value='' disabled selected>
-                      Pilih Paket Axis
-                    </option>
-                    {Operator(axis)}
-                  </Form.Control>
-                  {showDetails &&
-                    axis.map((ax) => {
-                      if (`${ax.name} (Rp. ${ax.price})` === details) {
-                        return (
-                          <Jumbotron className='mt-2' key={ax.id}>
-                            <h5 className='lead mb-2 text-center'>{details}</h5>
-                            <hr />
-                            {ax.details.map((detail, index) => (
-                              <p className='lead' key={index}>
-                                <span className='text-success lead'>✓</span>{' '}
-                                {detail}
-                              </p>
-                            ))}
-                          </Jumbotron>
-                        )
-                      }
-                    })}
-                </>
-              ) : show && showIndosat ? (
-                <>
-                  <Form.Control
-                    as='select'
-                    name='order'
-                    value={order}
-                    onChange={(e) => onChange(e)}
-                  >
-                    <option value='' disabled selected>
-                      Pilih Paket Indosat
-                    </option>
-                    {Operator(indosat)}
-                  </Form.Control>
-                  {showDetails &&
-                    indosat.map((ind) => {
-                      if (`${ind.name} (Rp. ${ind.price})` === details) {
-                        return (
-                          <Jumbotron className='mt-2' key={ind.id}>
-                            <h5 className='lead mb-2 text-center'>{details}</h5>
-                            <hr />
-                            {ind.details.map((detail, index) => (
-                              <p className='lead' key={index}>
-                                <span className='text-success lead'>✓</span>{' '}
-                                {detail}
-                              </p>
-                            ))}
-                          </Jumbotron>
-                        )
-                      }
-                    })}
-                </>
-              ) : show && showTelkomsel ? (
-                <>
-                  <Form.Control
-                    as='select'
-                    name='order'
-                    value={order}
-                    onChange={(e) => onChange(e)}
-                  >
-                    <option value='' disabled selected>
-                      Pilih Paket Telkomsel
-                    </option>
-                    {Operator(telkomsel)}
-                  </Form.Control>
-                  {showDetails &&
-                    telkomsel.map((tel) => {
-                      if (`${tel.name} (Rp. ${tel.price})` === details) {
-                        return (
-                          <Jumbotron className='mt-2' key={tel.id}>
-                            <h5 className='lead mb-2 text-center'>{details}</h5>
-                            <hr />
-                            {tel.details.map((detail, index) => (
-                              <p className='lead' key={index}>
-                                <span className='text-success lead'>✓</span>{' '}
-                                {detail}
-                              </p>
-                            ))}
-                          </Jumbotron>
-                        )
-                      }
-                    })}
-                </>
-              ) : show && showXl ? (
-                <>
-                  <Form.Control
-                    as='select'
-                    name='order'
-                    value={order}
-                    onChange={(e) => onChange(e)}
-                  >
-                    <option value='' disabled selected>
-                      Pilih Paket XL
-                    </option>
-                    {Operator(xl)}
-                  </Form.Control>
-                  {showDetails &&
-                    xl.map((x) => {
-                      if (`${x.name} (Rp. ${x.price})` === details) {
-                        return (
-                          <Jumbotron className='mt-2' key={x.id}>
-                            <h5 className='lead mb-2 text-center'>{details}</h5>
-                            <hr />
-                            {x.details.map((detail, index) => (
-                              <p className='lead' key={index}>
-                                <span className='text-success lead'>✓</span>{' '}
-                                {detail}
-                              </p>
-                            ))}
-                          </Jumbotron>
-                        )
-                      }
-                    })}
-                </>
-              ) : show && showSmartfren ? (
-                <>
-                  <Form.Control
-                    as='select'
-                    name='order'
-                    value={order}
-                    onChange={(e) => onChange(e)}
-                  >
-                    <option value='' disabled selected>
-                      Pilih Paket Smartfren
-                    </option>
-                    {Operator(smartfren)}
-                  </Form.Control>
-                  {showDetails &&
-                    smartfren.map((sm) => {
-                      if (`${sm.name} (Rp. ${sm.price})` === details) {
-                        return (
-                          <Jumbotron className='mt-2' key={sm.id}>
-                            <h5 className='lead mb-2 text-center'>{details}</h5>
-                            <hr />
-                            {sm.details.map((detail, index) => (
-                              <p className='lead' key={index}>
-                                <span className='text-success lead'>✓</span>{' '}
-                                {detail}
-                              </p>
-                            ))}
-                          </Jumbotron>
-                        )
-                      }
-                    })}
-                </>
-              ) : null}
-            </Form.Group>
+                {showDetails && paket && (
+                  <Jumbotron className='mt-2'>
+                    <h5 className='lead mb-2 text-center'>{paket.data.name}</h5>
+                    <hr />
+                    {paket.data.description.map((description, index) => (
+                      <p className='lead' key={index}>
+                        <span className='text-success lead'>✓</span>{' '}
+                        {description}
+                      </p>
+                    ))}
+                  </Jumbotron>
+                )}
+              </Form.Group>
+            )}
             <Form.Group>
               <Form.Control
                 as='select'
@@ -415,7 +247,7 @@ const Kuota = () => {
             </Form.Group>
             <div className='text-center mb-4'>
               <Button type='submit' variant='primary' className='btn'>
-                Beli <i class='fas fa-cart-plus' />
+                Beli <i className='fas fa-cart-plus' />
               </Button>
             </div>
           </Form>

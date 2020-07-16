@@ -16,6 +16,8 @@ const ModalComponent = ({
   providers,
   paketId,
   isClicked,
+  deleteAllTransactions,
+  deleteAllTransfers,
 }) => {
   const [name, setName] = useState('')
   const [price, setPrice] = useState('')
@@ -111,7 +113,14 @@ const ModalComponent = ({
       setDescription('')
       setProvider_id('')
     } else if (action === 'updatePaket') {
-      updatePaket({ name, price, description }, paketContext.paket.data._id)
+      updatePaket(
+        { name, price, description: description.toString() },
+        paketContext.paket.data._id
+      )
+    } else if (action === 'deleteAllTransactions') {
+      deleteAllTransactions()
+    } else if (action === 'deleteAllTransfers') {
+      deleteAllTransfers()
     }
   }
 
@@ -154,7 +163,7 @@ const ModalComponent = ({
                     Pilih Provider
                   </option>
                   {providers &&
-                    providers.map((provider) => (
+                    providers.data.map((provider) => (
                       <option key={provider._id} value={provider._id}>
                         {provider.name}
                       </option>

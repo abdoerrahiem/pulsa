@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 import { Modal, Button, Form, InputGroup, FormControl } from 'react-bootstrap'
 import convert from '../utils/convert'
 import NavBottom from '../components/NavBottom'
+import TransferContext from '../context/transfer/TransferContext'
 
 const banks = [
   { id: 1, name: 'BCA' },
@@ -21,6 +22,9 @@ const Transfer = () => {
   const [showSuccess, setShowSuccess] = useState(false)
   const [showAlertMinimum, setShowAlertMinimum] = useState(false)
   const [showAlertMax, setShowAlertMax] = useState(false)
+
+  const transferContext = useContext(TransferContext)
+  const { createTransfer } = transferContext
 
   const handleChange = (e) => {
     e.preventDefault()
@@ -47,9 +51,14 @@ const Transfer = () => {
       Number(transfer) + 10000
     )}`}*`
 
-    // https://api.whatsapp.com/send?phone=6289694624299&text=%F0%9F%8F%A6%20Nama%20Bank%20%3A%20BCA%0A%F0%9F%91%A5%20Nama%20Pemilik%20Rekening%20%3A%20Abdur%20Rahim%0A%F0%9F%92%B3%20No.%20Rekening%20%3A%202222222222%0A%F0%9F%92%B5%20Jumlah%20Transfer%20%3A%20Rp.%20200.000%0A%F0%9F%92%B0%20Biaya%20Admin%20%3A%20Rp.%2010.000%0A*Total%20%3A%20210.000*
+    // setShowSuccess(false)
 
-    setShowSuccess(false)
+    createTransfer({
+      bank,
+      name,
+      rekeningNumber: card,
+      transfer,
+    })
   }
 
   const handleClose = () => setShowSuccess(false)

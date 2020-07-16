@@ -16,11 +16,7 @@ const DaftarProvider = () => {
 
   useEffect(() => {
     getProviders()
-
-    if (providers) {
-      setTheProviders(providers.data)
-    }
-  }, [providers])
+  }, [getProviders])
 
   const handleDelete = (id) => {
     deleteProvider(id)
@@ -57,7 +53,7 @@ const DaftarProvider = () => {
       )}
       <p className='lead text-center mt-2'>LIST PROVIDER</p>
       <div>
-        {theProviders && theProviders.length > 0 ? (
+        {providers && providers.data.length > 0 ? (
           <Table responsive className='container'>
             <thead>
               <tr>
@@ -68,7 +64,7 @@ const DaftarProvider = () => {
               </tr>
             </thead>
             <tbody>
-              {theProviders.map((provider, index) => (
+              {providers.data.map((provider, index) => (
                 <tr key={provider._id}>
                   <td>{index + 1}</td>
                   <td>{provider.name}</td>
@@ -87,6 +83,10 @@ const DaftarProvider = () => {
               ))}
             </tbody>
           </Table>
+        ) : providers && providers.data.length === 0 ? (
+          <Alert variant='danger' className='container w-80'>
+            <i className='fas fa-exclamation-circle' /> Provider belum dibuat
+          </Alert>
         ) : (
           <div className='text-center' style={{ width: '100%' }}>
             <Spinner animation='border' variant='primary' />

@@ -9,7 +9,7 @@ import ProviderContext from '../../context/provider/ProviderContext'
 
 const PaketKuota = () => {
   const [showAddPaket, setShowAddPaket] = useState(false)
-  const [providers, setProviders] = useState([])
+  // const [providers, setProviders] = useState([])
   const [showDeleteSuccess, setShowDeleteSuccess] = useState(false)
   const [message, setMessage] = useState('')
 
@@ -17,7 +17,7 @@ const PaketKuota = () => {
   const providerContext = useContext(ProviderContext)
 
   const { paket } = paketContext
-  const { getProviders } = providerContext
+  const { getProviders, providers } = providerContext
 
   useEffect(() => {
     getProviders()
@@ -32,11 +32,11 @@ const PaketKuota = () => {
     }
   }, [paket])
 
-  useEffect(() => {
-    if (providerContext.providers !== null) {
-      setProviders(providerContext.providers.data)
-    }
-  }, [providerContext.providers])
+  // useEffect(() => {
+  //   if (providerContext.providers !== null) {
+  //     setProviders(providerContext.providers.data)
+  //   }
+  // }, [providerContext.providers])
 
   return (
     <div>
@@ -53,13 +53,15 @@ const PaketKuota = () => {
       <div className='mt-4 mb-4rem container'>
         <h5 className='text-center mb-4'>List Paket Kuota</h5>
         {showDeleteSuccess && (
-          <Alert variant='primary'>
-            <i className='fas fa-check' /> {message}
-          </Alert>
+          <div className='container'>
+            <Alert variant='primary'>
+              <i className='fas fa-check' /> {message}
+            </Alert>
+          </div>
         )}
         <div>
-          {providers.length > 0 ? (
-            providers.map((provider) => (
+          {providers && providers.data.length > 0 ? (
+            providers.data.map((provider) => (
               <Table
                 key={provider._id}
                 provider={provider.pakets}
@@ -68,6 +70,10 @@ const PaketKuota = () => {
                 admin
               />
             ))
+          ) : providers && providers.data.length === 0 ? (
+            <Alert variant='danger' className='container w-80'>
+              <i className='fas fa-exclamation-circle' /> Paket belum dibuat
+            </Alert>
           ) : (
             <div className='text-center' style={{ width: '100%' }}>
               <Spinner animation='border' variant='primary' />
