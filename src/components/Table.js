@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Table } from 'react-bootstrap'
 import Modal from './admin/Modal'
 import PaketContext from '../context/paket/PaketContext'
+import convert from '../utils/convert'
 
 const TableCom = ({ providers, provider, name, admin }) => {
   const [showEditProvider, setShowEditProvider] = useState(false)
@@ -51,7 +52,7 @@ const TableCom = ({ providers, provider, name, admin }) => {
             <tr key={prov._id}>
               <th>{index + 1}</th>
               <td>{prov.name}</td>
-              <td>Rp. {prov.price}</td>
+              <td>Rp. {convert(prov.price)}</td>
               {admin && (
                 <>
                   <td>

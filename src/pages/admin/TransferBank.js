@@ -3,6 +3,7 @@ import { Table, Badge, Alert, Spinner } from 'react-bootstrap'
 import Navbar from '../../components/admin/Navbar'
 import Modal from '../../components/admin/Modal'
 import TransferContext from '../../context/transfer/TransferContext'
+import convert from '../../utils/convert'
 
 const TransferBank = () => {
   const [showWarning, setShowWarning] = useState(false)
@@ -61,7 +62,7 @@ const TransferBank = () => {
                   <td>{transfer.name}</td>
                   <td>{transfer.bank}</td>
                   <td>{transfer.rekeningNumber}</td>
-                  <td>Rp. {transfer.transfer}</td>
+                  <td>Rp. {convert(transfer.transfer)}</td>
                   <td onClick={() => deleteTransfer(transfer._id)}>
                     <i className='fas fa-trash text-danger' />
                   </td>

@@ -1,7 +1,14 @@
 import React, { useState, useContext, useEffect } from 'react'
 import NavBottom from '../components/NavBottom'
 import styled from 'styled-components'
-import { Form, Button, Modal, InputGroup, FormControl } from 'react-bootstrap'
+import {
+  Form,
+  Button,
+  Modal,
+  InputGroup,
+  FormControl,
+  Spinner,
+} from 'react-bootstrap'
 import {
   provider,
   axis,
@@ -13,6 +20,7 @@ import {
   buyMethod,
 } from '../data'
 import Operator from '../data/loop'
+import convert from '../utils/convert'
 
 import ProviderContext from '../context/provider/ProviderContext'
 import PaketContext from '../context/paket/PaketContext'
@@ -38,6 +46,7 @@ const Kuota = () => {
   const [showPayLater, setShowPayLater] = useState(false)
   const [showConfirmPuchase, setShowConfirmPurchase] = useState(false)
   const [provider, setProvider] = useState('')
+  const [finishedOrder, setFinishedOrder] = useState('')
 
   const { name, order, phone, via } = orderan
 
@@ -51,19 +60,16 @@ const Kuota = () => {
 
   useEffect(() => {
     getProviders()
-  }, [])
+
+    if (paket !== null) {
+      setFinishedOrder(`${paket.data.name} (Rp. ${convert(paket.data.price)})`)
+    }
+  }, [paket])
 
   const onChange = (e) => {
-    if (e.target.name === 'order') {
-      getPaket(e.target.value)
+    getPaket(e.target.value)
 
-      setOrderan({
-        ...orderan,
-        order: e.nativeEvent.target[e.nativeEvent.target.selectedIndex].text,
-      })
-    } else {
-      setOrderan({ ...orderan, [e.target.name]: e.target.value })
-    }
+    setOrderan({ ...orderan, [e.target.name]: e.target.value })
 
     setDetails(e.target.value)
     setShowDetails(true)
@@ -94,13 +100,13 @@ const Kuota = () => {
       return
     }
 
-    window.location.href = `https://api.whatsapp.com/send?phone=628987769188&text=Nama%20%3a%20${name}%0aOrderan%20%3a%20${order}%0aNo.%20Hp%20%3a%20${phone}%0aPembayaran%20%3a%20${via}%0a&source=&data=&app_absent=`
+    window.location.href = `https://api.whatsapp.com/send?phone=628987769188&text=Nama%20%3a%20${name}%0aOrderan%20%3a%20${finishedOrder}%0aNo.%20Hp%20%3a%20${phone}%0aPembayaran%20%3a%20${via}%0a&source=&data=&app_absent=`
 
     createTransaction({
       name,
       phone,
       provider: paket.data.provider.name,
-      paket: order,
+      paket: finishedOrder,
       method: via,
     })
   }
@@ -132,43 +138,43 @@ const Kuota = () => {
             </Button>
           </Modal.Footer>
         </Modal>
+        {providers ? (
+          <Index>
+            <p className='lead text-center mb-4'>Silahkan isi orderan kamu!</p>
+            <Form onSubmit={(e) => onSubmit(e)}>
+              <InputGroup className='mb-3'>
+                <InputGroup.Prepend>
+                  <InputGroup.Text id='basic-addon1'>
+                    <i className='fas fa-user-tie' />
+                  </InputGroup.Text>
+                </InputGroup.Prepend>
+                <FormControl
+                  placeholder='Nama'
+                  aria-label='Nama'
+                  aria-describedby='basic-addon1'
+                  type='text'
+                  name='name'
+                  value={name}
+                  onChange={(e) => onChange(e)}
+                />
+              </InputGroup>
+              <InputGroup className='mb-3'>
+                <InputGroup.Prepend style={{ color: 'black !important' }}>
+                  <InputGroup.Text id='basic-addon1'>
+                    <i className='fas fa-phone-alt' />
+                  </InputGroup.Text>
+                </InputGroup.Prepend>
+                <FormControl
+                  placeholder='Nomor HP'
+                  aria-label='Nomor HP'
+                  aria-describedby='basic-addon1'
+                  type='number'
+                  name='phone'
+                  value={phone}
+                  onChange={(e) => onChange(e)}
+                />
+              </InputGroup>
 
-        <Index>
-          <p className='lead text-center mb-4'>Silahkan isi orderan kamu!</p>
-          <Form onSubmit={(e) => onSubmit(e)}>
-            <InputGroup className='mb-3'>
-              <InputGroup.Prepend>
-                <InputGroup.Text id='basic-addon1'>
-                  <i className='fas fa-user-tie' />
-                </InputGroup.Text>
-              </InputGroup.Prepend>
-              <FormControl
-                placeholder='Nama'
-                aria-label='Nama'
-                aria-describedby='basic-addon1'
-                type='text'
-                name='name'
-                value={name}
-                onChange={(e) => onChange(e)}
-              />
-            </InputGroup>
-            <InputGroup className='mb-3'>
-              <InputGroup.Prepend style={{ color: 'black !important' }}>
-                <InputGroup.Text id='basic-addon1'>
-                  <i className='fas fa-phone-alt' />
-                </InputGroup.Text>
-              </InputGroup.Prepend>
-              <FormControl
-                placeholder='Nomor HP'
-                aria-label='Nomor HP'
-                aria-describedby='basic-addon1'
-                type='number'
-                name='phone'
-                value={phone}
-                onChange={(e) => onChange(e)}
-              />
-            </InputGroup>
-            {providers && (
               <Form.Group>
                 <Form.Control
                   className='mb-2'
@@ -201,6 +207,9 @@ const Kuota = () => {
                 {showDetails && paket && (
                   <Jumbotron className='mt-2'>
                     <h5 className='lead mb-2 text-center'>{paket.data.name}</h5>
+                    <h6 className='lead text-center'>
+                      ( Rp. {convert(paket.data.price)} )
+                    </h6>
                     <hr />
                     {paket.data.description.map((description, index) => (
                       <p className='lead' key={index}>
@@ -211,47 +220,52 @@ const Kuota = () => {
                   </Jumbotron>
                 )}
               </Form.Group>
-            )}
-            <Form.Group>
-              <Form.Control
-                as='select'
-                name='via'
-                value={via}
-                onChange={(e) => onChangeMethod(e)}
-              >
-                <option value='' disabled selected>
-                  Pilih Pembayaran
-                </option>
-                {buyMethod.map((method) => (
-                  <option key={method.id} value={method.value}>
-                    {method.name}
+
+              <Form.Group>
+                <Form.Control
+                  as='select'
+                  name='via'
+                  value={via}
+                  onChange={(e) => onChangeMethod(e)}
+                >
+                  <option value='' disabled selected>
+                    Pilih Pembayaran
                   </option>
-                ))}
-              </Form.Control>
-              {showConfirmPuchase && (
-                <em
-                  className='text-danger text-bold'
-                  style={{ fontSize: '11px' }}
-                >
-                  * Orderan akan diproses setelah melakukan transfer
-                </em>
-              )}
-              {showPayLater && (
-                <em
-                  className='text-danger text-bold'
-                  style={{ fontSize: '11px' }}
-                >
-                  * Batas pembayaran 1 hari
-                </em>
-              )}
-            </Form.Group>
-            <div className='text-center mb-4'>
-              <Button type='submit' variant='primary' className='btn'>
-                Beli <i className='fas fa-cart-plus' />
-              </Button>
-            </div>
-          </Form>
-        </Index>
+                  {buyMethod.map((method) => (
+                    <option key={method.id} value={method.value}>
+                      {method.name}
+                    </option>
+                  ))}
+                </Form.Control>
+                {showConfirmPuchase && (
+                  <em
+                    className='text-danger text-bold'
+                    style={{ fontSize: '11px' }}
+                  >
+                    * Orderan akan diproses setelah melakukan transfer
+                  </em>
+                )}
+                {showPayLater && (
+                  <em
+                    className='text-danger text-bold'
+                    style={{ fontSize: '11px' }}
+                  >
+                    * Batas pembayaran 1 hari
+                  </em>
+                )}
+              </Form.Group>
+              <div className='text-center mb-4'>
+                <Button type='submit' variant='primary' className='btn'>
+                  Beli <i className='fas fa-cart-plus' />
+                </Button>
+              </div>
+            </Form>
+          </Index>
+        ) : (
+          <div className='text-center' style={{ width: '100%' }}>
+            <Spinner animation='border' variant='primary' />
+          </div>
+        )}
       </div>
       <NavBottom />
     </KuotaStyle>
@@ -264,7 +278,7 @@ const Index = styled.div`
   padding: 20px 15px;
   border-top-left-radius: 20px;
   border-bottom-right-radius: 20px;
-  margin-top: 30px;
+  margin-top: 7rem;
   margin-bottom: 5rem;
   box-shadow: 2px 2px 2px -1px rgba(0, 0, 0, 0.22);
   width: 320px;
