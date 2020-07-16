@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 import Home from './pages/Home'
 import Kuota from './pages/Kuota'
-import Search from './pages/Search'
+import NotFound from './pages/NotFound'
 import Transfer from './pages/Transfer'
 import Warning from './pages/Warning'
 import Admin from './pages/admin/Admin'
@@ -47,7 +47,6 @@ const App = () => {
                   <Switch>
                     <Route exact path='/' component={Home} />
                     <Route exact path='/kuota' component={Kuota} />
-                    <Route exact path='/search' component={Search} />
                     <Route exact path='/transfer' component={Transfer} />
                     <Route exact path='/admin' component={Admin} />
                     <PrivateRoute
@@ -70,6 +69,7 @@ const App = () => {
                       path='/admin/transfer-bank'
                       component={TransferBank}
                     />
+                    <Route component={NotFound} />
                   </Switch>
                 </BrowserRouter>
               </AlertState>
